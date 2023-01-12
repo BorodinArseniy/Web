@@ -13,7 +13,7 @@ public class FirstController {
     }
 
     @GetMapping("/info")
-    public String endPoint2( ){
+    public String endPoint2(){
         return "Arseniy, Recipes, 10.01.2023, Java-project/recipes_collection/Spring_web";
     }
 
