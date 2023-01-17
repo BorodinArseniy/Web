@@ -8,5 +8,4 @@ public class Recipe {
     int cookingTime;
     Ingredient[] ingredients;
     String[] steps;
-
 }
