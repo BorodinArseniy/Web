@@ -19,7 +19,22 @@ public class IngredientsImpl implements Ingredients {
     }
 
     @Override
-    public Ingredient getIngredient(int num) {
+    public Ingredient getIngredient(Integer num) {
         return ingredients.get(num);
+    }
+
+    @Override
+    public Map<Integer, Ingredient> getAllIngredients() {
+        return ingredients;
+    }
+
+    @Override
+    public void changeIngredient(Integer num, Ingredient ingredient) {
+        ingredients.put(num, ingredient);
+    }
+
+    @Override
+    public void deleteIngredient(Integer num){
+        ingredients.remove(num);
     }
 }

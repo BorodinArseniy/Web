@@ -1,6 +1,6 @@
 package me.arseniy.demo.services;
 
-import me.arseniy.demo.modules.Ingredient;
+import me.arseniy.demo.modules.Recipe;
 import me.arseniy.demo.modules.Recipe;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +15,28 @@ public class RecipesImpl implements Recipes{
     int counter = 0;
 
     @Override
-    public void addRecipe(Recipe recipe) {
+    public void addRecipe(Recipe Recipe) {
         counter++;
-        recipes.put(counter, recipe);
+        recipes.put(counter, Recipe);
     }
 
     @Override
-    public me.arseniy.demo.modules.Recipe getRecipe(int num) {
+    public Recipe getRecipe(Integer num) {
         return recipes.get(num);
     }
 
+    @Override
+    public Map<Integer, Recipe> getAllRecipes() {
+        return recipes;
+    }
+
+    @Override
+    public void changeRecipe(Integer num, Recipe Recipe) {
+        recipes.put(num, Recipe);
+    }
+
+    @Override
+    public void deleteRecipe(Integer num){
+        recipes.remove(num);
+    }
 }
