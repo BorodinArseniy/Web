@@ -9,7 +9,7 @@ import java.util.Map;
 @Service
 public class IngredientsImpl implements Ingredients {
     Map<Integer, Ingredient> ingredients = new HashMap<>();
-    int counter = 0;
+    private static int counter = 0;
 
 
     @Override

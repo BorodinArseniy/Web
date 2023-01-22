@@ -1,8 +1,17 @@
 package me.arseniy.demo.modules;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode
 public class Ingredient {
-    String name;
-    int count;
-    String unitOfMeasure;
+    private String name;
+    private int count;
+    private String unitOfMeasure;
 
 }

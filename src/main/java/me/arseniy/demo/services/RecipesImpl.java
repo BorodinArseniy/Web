@@ -4,6 +4,7 @@ import me.arseniy.demo.modules.Recipe;
 import me.arseniy.demo.modules.Recipe;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ import java.util.Map;
 public class RecipesImpl implements Recipes{
 
     Map<Integer, Recipe> recipes = new HashMap<>();
-    int counter = 0;
+    private static int counter = 0;
 
     @Override
     public void addRecipe(Recipe Recipe) {
