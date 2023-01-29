@@ -3,11 +3,11 @@ package me.arseniy.demo.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import me.arseniy.demo.modules.Ingredient;
+import me.arseniy.demo.services.FilesService;
 import me.arseniy.demo.services.Ingredients;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.naming.NamingEnumeration;
 import javax.validation.Valid;
 import java.util.Map;
 
@@ -18,9 +18,6 @@ public class IngredientController {
 
     private Ingredients ingredients;
 
-    public IngredientController(Ingredients ingredients) {
-        this.ingredients = ingredients;
-    }
 
     @GetMapping("/{num}")
     @Operation(description = "searching for an ingredient")

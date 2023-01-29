@@ -1,21 +1,36 @@
 package me.arseniy.demo.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import me.arseniy.demo.modules.Ingredient;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 @Service
 public class IngredientsImpl implements Ingredients {
     Map<Integer, Ingredient> ingredients = new HashMap<>();
     private static int counter = 0;
 
+    private final FilesService filesService;
+
+    public IngredientsImpl(FilesService filesService) {
+        this.filesService = filesService;
+    }
 
     @Override
     public void addIngredient(Ingredient ingredient) {
         counter++;
         ingredients.put(counter, ingredient);
+    }
+
+    @PostConstruct
+    private void init(){
+        filesService.readFromIngredientsFile();
     }
 
     @Override
@@ -37,4 +52,27 @@ public class IngredientsImpl implements Ingredients {
     public void deleteIngredient(Integer num){
         ingredients.remove(num);
     }
+
+
+    private void saveToFile(){
+        String json = null;
+        try {
+            json = new ObjectMapper().writeValueAsString(ingredients);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        filesService.saveToIngredientsFile(json);
+    }
+
+    private void readFromFile(){
+        String json = filesService.readFromIngredientsFile();
+        try {
+            ingredients = new ObjectMapper().readValue(json, new TypeReference<TreeMap<Integer, Ingredient>>() {
+            });
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 }
