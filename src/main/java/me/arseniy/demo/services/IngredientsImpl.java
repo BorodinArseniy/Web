@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.arseniy.demo.modules.Ingredient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -13,7 +14,10 @@ import java.util.TreeMap;
 
 @Service
 public class IngredientsImpl implements Ingredients {
-    Map<Integer, Ingredient> ingredients = new HashMap<>();
+
+    @Value("${name.of.ingredients.file}")
+    public String ingredientsFileName;
+    private Map<Integer, Ingredient> ingredients = new HashMap<>();
     private static int counter = 0;
 
     private final FilesService filesService;
@@ -26,11 +30,12 @@ public class IngredientsImpl implements Ingredients {
     public void addIngredient(Ingredient ingredient) {
         counter++;
         ingredients.put(counter, ingredient);
+        saveToFile();
     }
 
     @PostConstruct
     private void init(){
-        filesService.readFromIngredientsFile();
+        filesService.readFromFile(ingredientsFileName);
     }
 
     @Override
@@ -46,6 +51,7 @@ public class IngredientsImpl implements Ingredients {
     @Override
     public void changeIngredient(Integer num, Ingredient ingredient) {
         ingredients.put(num, ingredient);
+        saveToFile();
     }
 
     @Override
@@ -61,11 +67,11 @@ public class IngredientsImpl implements Ingredients {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        filesService.saveToIngredientsFile(json);
+        filesService.saveToFile(json, ingredientsFileName);
     }
 
     private void readFromFile(){
-        String json = filesService.readFromIngredientsFile();
+        String json = filesService.readFromFile(ingredientsFileName);
         try {
             ingredients = new ObjectMapper().readValue(json, new TypeReference<TreeMap<Integer, Ingredient>>() {
             });

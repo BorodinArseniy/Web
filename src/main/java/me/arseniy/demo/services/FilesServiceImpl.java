@@ -12,39 +12,23 @@ import java.nio.file.Path;
 public class FilesServiceImpl implements FilesService {
 
     @Value("${path.to.data.file}")
-    private String dataFilePath;
+    public String dataFilePath;
 
-    @Value("${name.of.ingredients.file}")
-    private String ingredientsFileName;
-
-    @Value("${name.of.recipes.file}")
-    private String recipesFileName;
 
     @Override
-    public boolean saveToIngredientsFile(String json) {
+    public String readFromFile(String fileName){
         try {
-            cleanIngredientsFile();
-            Files.writeString(Path.of(dataFilePath, ingredientsFileName), json);
-            return true;
+            return Files.readString(Path.of(dataFilePath, fileName));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public String readFromIngredientsFile(){
+    public boolean cleanFile(String fileName){
         try {
-            return Files.readString(Path.of(dataFilePath, ingredientsFileName));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public boolean cleanIngredientsFile(){
-        try {
-            Files.deleteIfExists(Path.of(dataFilePath, ingredientsFileName));
-            Files.createFile(Path.of(dataFilePath, ingredientsFileName));
+            Files.deleteIfExists(Path.of(dataFilePath, fileName));
+            Files.createFile(Path.of(dataFilePath, fileName));
         } catch (IOException e){
             throw new RuntimeException();
         }
@@ -52,33 +36,13 @@ public class FilesServiceImpl implements FilesService {
     }
 
     @Override
-    public boolean saveToRecipesFile(String json) {
+    public boolean saveToFile(String json, String fileName) {
         try {
-            cleanRecipesFile();
-            Files.writeString(Path.of(dataFilePath, recipesFileName), json);
+            cleanFile(fileName);
+            Files.writeString(Path.of(dataFilePath, fileName), json);
             return true;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public String readFromRecipesFile(){
-        try {
-            return Files.readString(Path.of(dataFilePath, recipesFileName));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public boolean cleanRecipesFile(){
-        try {
-            Files.deleteIfExists(Path.of(dataFilePath, recipesFileName));
-            Files.createFile(Path.of(dataFilePath, recipesFileName));
-        } catch (IOException e){
-            throw new RuntimeException();
-        }
-        return true;
     }
 }

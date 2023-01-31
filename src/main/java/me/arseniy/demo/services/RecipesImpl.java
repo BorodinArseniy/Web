@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import me.arseniy.demo.modules.Ingredient;
 import me.arseniy.demo.modules.Recipe;
 import me.arseniy.demo.modules.Recipe;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -18,19 +19,22 @@ import java.util.TreeMap;
 @Service
 public class RecipesImpl implements Recipes{
 
+    @Value("${name.of.recipes.file}")
+    public String recipesFileName;
     private final FilesService filesService;
 
     public RecipesImpl(FilesService filesService) {
         this.filesService = filesService;
     }
 
-    Map<Integer, Recipe> recipes = new HashMap<>();
+    private Map<Integer, Recipe> recipes = new HashMap<>();
     private static int counter = 0;
 
     @Override
     public void addRecipe(Recipe Recipe) {
         counter++;
         recipes.put(counter, Recipe);
+        saveToFile();
     }
 
     @Override
@@ -46,6 +50,7 @@ public class RecipesImpl implements Recipes{
     @Override
     public void changeRecipe(Integer num, Recipe Recipe) {
         recipes.put(num, Recipe);
+        saveToFile();
     }
 
     @Override
@@ -55,7 +60,7 @@ public class RecipesImpl implements Recipes{
 
     @PostConstruct
     private void init(){
-        filesService.readFromRecipesFile();
+        filesService.readFromFile(recipesFileName);
     }
 
     private void saveToFile(){
@@ -65,11 +70,11 @@ public class RecipesImpl implements Recipes{
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        filesService.saveToRecipesFile(json);
+        filesService.saveToFile(json, recipesFileName);
     }
 
     private void readFromFile(){
-        String json = filesService.readFromRecipesFile();
+        String json = filesService.readFromFile(recipesFileName);
         try {
             recipes = new ObjectMapper().readValue(json, new TypeReference<TreeMap<Integer, Recipe>>() {
             });
