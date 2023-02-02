@@ -16,7 +16,7 @@ import java.util.TreeMap;
 public class IngredientsImpl implements Ingredients {
 
     @Value("${name.of.ingredients.file}")
-    public String ingredientsFileName;
+    private String ingredientsFileName;
     private Map<Integer, Ingredient> ingredients = new HashMap<>();
     private static int counter = 0;
 
@@ -57,17 +57,17 @@ public class IngredientsImpl implements Ingredients {
     @Override
     public void deleteIngredient(Integer num){
         ingredients.remove(num);
+        saveToFile();
     }
 
 
     private void saveToFile(){
-        String json = null;
         try {
-            json = new ObjectMapper().writeValueAsString(ingredients);
+            String json = new ObjectMapper().writeValueAsString(ingredients);
+            filesService.saveToFile(json, ingredientsFileName);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        filesService.saveToFile(json, ingredientsFileName);
     }
 
     private void readFromFile(){

@@ -56,6 +56,7 @@ public class RecipesImpl implements Recipes{
     @Override
     public void deleteRecipe(Integer num){
         recipes.remove(num);
+        saveToFile();
     }
 
     @PostConstruct
@@ -64,13 +65,14 @@ public class RecipesImpl implements Recipes{
     }
 
     private void saveToFile(){
-        String json = null;
+
         try {
-            json = new ObjectMapper().writeValueAsString(recipes);
+            String json = new ObjectMapper().writeValueAsString(recipes);
+            filesService.saveToFile(json, recipesFileName);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        filesService.saveToFile(json, recipesFileName);
+
     }
 
     private void readFromFile(){

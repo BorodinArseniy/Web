@@ -12,7 +12,7 @@ import java.nio.file.Path;
 public class FilesServiceImpl implements FilesService {
 
     @Value("${path.to.data.file}")
-    public String dataFilePath;
+    private String dataFilePath;
 
 
     @Override
