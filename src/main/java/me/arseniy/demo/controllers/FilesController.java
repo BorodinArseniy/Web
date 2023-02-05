@@ -4,6 +4,7 @@ import me.arseniy.demo.services.FilesService;
 import me.arseniy.demo.services.Ingredients;
 import me.arseniy.demo.services.Recipes;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,11 +15,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 
-import static me.arseniy.demo.services.RecipesImpl.recipesFileName;
-
 @RestController
 @RequestMapping("/files")
 public class FilesController {
+
+    @Value("${name.of.recipes.file}")
+    public static String recipesFileName;
     private final FilesService filesService;
 
     public FilesController(FilesService filesService) {
