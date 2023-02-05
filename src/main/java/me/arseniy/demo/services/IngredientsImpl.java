@@ -16,7 +16,7 @@ import java.util.TreeMap;
 public class IngredientsImpl implements Ingredients {
 
     @Value("${name.of.ingredients.file}")
-    private String ingredientsFileName;
+    public static String ingredientsFileName;
     private Map<Integer, Ingredient> ingredients = new HashMap<>();
     private static int counter = 0;
 

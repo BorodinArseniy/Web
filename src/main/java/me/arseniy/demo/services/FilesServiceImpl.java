@@ -3,7 +3,7 @@ package me.arseniy.demo.services;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -44,5 +44,10 @@ public class FilesServiceImpl implements FilesService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public File getDataFile(String fileName){
+        return new File(dataFilePath+"/"+fileName);
     }
 }

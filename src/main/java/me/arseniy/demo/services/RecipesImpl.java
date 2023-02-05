@@ -20,7 +20,7 @@ import java.util.TreeMap;
 public class RecipesImpl implements Recipes{
 
     @Value("${name.of.recipes.file}")
-    public String recipesFileName;
+    public static String recipesFileName;
     private final FilesService filesService;
 
     public RecipesImpl(FilesService filesService) {
