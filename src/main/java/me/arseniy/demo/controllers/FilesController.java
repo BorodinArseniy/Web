@@ -20,7 +20,7 @@ import java.io.*;
 public class FilesController {
 
     @Value("${name.of.recipes.file}")
-    public static String recipesFileName;
+    public String recipesFileName;
     private final FilesService filesService;
 
     public FilesController(FilesService filesService) {
