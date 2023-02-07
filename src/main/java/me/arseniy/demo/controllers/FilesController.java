@@ -43,7 +43,7 @@ public class FilesController {
                     .body(resource);
     }
 
-    @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE )
+    @PostMapping(value = "/import/ingredients", consumes = MediaType.MULTIPART_FORM_DATA_VALUE )
     public ResponseEntity<Void> uploadIngredientsFile(@RequestParam MultipartFile file) {
         filesService.cleanFile(ingredientsFileName);
         File dataFile = filesService.getDataFile(ingredientsFileName);
@@ -57,7 +57,7 @@ public class FilesController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
-    @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE )
+    @PostMapping(value = "/import/recipes", consumes = MediaType.MULTIPART_FORM_DATA_VALUE )
     public ResponseEntity<Void> uploadRecipesFile(@RequestParam MultipartFile file) {
         filesService.cleanFile(recipesFileName);
         File dataFile = filesService.getDataFile(recipesFileName);
