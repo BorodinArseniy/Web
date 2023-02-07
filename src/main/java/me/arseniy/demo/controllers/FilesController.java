@@ -21,6 +21,10 @@ public class FilesController {
 
     @Value("${name.of.recipes.file}")
     public String recipesFileName;
+
+    @Value("${name.of.ingredients.file}")
+    public String ingredientsFileName;
+
     private final FilesService filesService;
 
     public FilesController(FilesService filesService) {
@@ -40,9 +44,23 @@ public class FilesController {
     }
 
     @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE )
-    public ResponseEntity<Void> uploadFile(@RequestParam MultipartFile file, String fileName) {
-        filesService.cleanFile(fileName);
-        File dataFile = filesService.getDataFile(fileName);
+    public ResponseEntity<Void> uploadIngredientsFile(@RequestParam MultipartFile file) {
+        filesService.cleanFile(ingredientsFileName);
+        File dataFile = filesService.getDataFile(ingredientsFileName);
+
+        try ( FileOutputStream fos = new FileOutputStream(dataFile)){
+            IOUtils.copy(file.getInputStream(), fos);
+            return ResponseEntity.ok().build();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+
+    @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE )
+    public ResponseEntity<Void> uploadRecipesFile(@RequestParam MultipartFile file) {
+        filesService.cleanFile(recipesFileName);
+        File dataFile = filesService.getDataFile(recipesFileName);
 
         try ( FileOutputStream fos = new FileOutputStream(dataFile)){
             IOUtils.copy(file.getInputStream(), fos);
