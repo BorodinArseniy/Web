@@ -18,6 +18,9 @@ public class IngredientController {
 
     private Ingredients ingredients;
 
+    public IngredientController(Ingredients ingredients) {
+        this.ingredients = ingredients;
+    }
 
     @GetMapping("/{num}")
     @Operation(description = "searching for an ingredient")

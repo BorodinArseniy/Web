@@ -14,7 +14,6 @@ public class FilesServiceImpl implements FilesService {
     @Value("${path.to.data.file}")
     private String dataFilePath;
 
-
     @Override
     public String readFromFile(String fileName){
         try {
