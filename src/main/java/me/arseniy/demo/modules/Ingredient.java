@@ -1,14 +1,12 @@
 package me.arseniy.demo.modules;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode
+@ToString
 // есть конструкторы (@NoArgsConstructor @AllArgsConstructor)
 public class Ingredient {
     private String name;

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import me.arseniy.demo.modules.Ingredient;
 import me.arseniy.demo.modules.Recipe;
 import me.arseniy.demo.modules.Recipe;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,10 @@ public class RecipesImpl implements Recipes{
 
     private Map<Integer, Recipe> recipes = new HashMap<>();
     private static int counter = 0;
+
+    public Map<Integer, Recipe> getRecipeMap() {
+        return recipes;
+    }
 
     @Override
     public void addRecipe(Recipe Recipe) {

@@ -1,15 +1,13 @@
 package me.arseniy.demo.modules;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import me.arseniy.demo.modules.Ingredient;
 
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class Recipe {
 
     private String name;
