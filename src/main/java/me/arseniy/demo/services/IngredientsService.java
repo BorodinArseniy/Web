@@ -1,14 +1,12 @@
 package me.arseniy.demo.services;
 
 import me.arseniy.demo.modules.Ingredient;
-import me.arseniy.demo.modules.Recipe;
-import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
 
 
-public interface Ingredients {
+public interface IngredientsService {
     void addIngredient(Ingredient ingredient);
 
     Ingredient getIngredient(Integer num);

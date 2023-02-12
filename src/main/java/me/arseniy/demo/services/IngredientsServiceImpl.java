@@ -13,16 +13,21 @@ import java.util.Map;
 import java.util.TreeMap;
 
 @Service
-public class IngredientsImpl implements Ingredients {
+public class IngredientsServiceImpl implements IngredientsService {
 
     @Value("${name.of.ingredients.file}")
-    public String ingredientsFileName;
+    private String ingredientsFileName;
+
+    public String getIngredientsFileName() {
+        return ingredientsFileName;
+    }
+
     private Map<Integer, Ingredient> ingredients = new HashMap<>();
     private static int counter = 0;
 
     private final FilesService filesService;
 
-    public IngredientsImpl(FilesService filesService) {
+    public IngredientsServiceImpl(FilesService filesService) {
         this.filesService = filesService;
     }
 

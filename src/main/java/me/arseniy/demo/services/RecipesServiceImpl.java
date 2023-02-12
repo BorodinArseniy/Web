@@ -3,28 +3,29 @@ package me.arseniy.demo.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import me.arseniy.demo.modules.Ingredient;
 import me.arseniy.demo.modules.Recipe;
-import me.arseniy.demo.modules.Recipe;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
 
 @Service
-public class RecipesImpl implements Recipes{
+public class RecipesServiceImpl implements RecipesService {
 
     @Value("${name.of.recipes.file}")
-    public String recipesFileName;
+    private String recipesFileName;
+
+    public String getRecipesFileName() {
+        return recipesFileName;
+    }
+
     private final FilesService filesService;
 
-    public RecipesImpl(FilesService filesService) {
+    public RecipesServiceImpl(FilesService filesService) {
         this.filesService = filesService;
     }
 
